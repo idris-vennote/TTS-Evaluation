@@ -66,7 +66,7 @@ def generate_spitch_audio(text, voice):
 def generate_awarri_audio(text):
     """Generate audio using Awarri TTS and return base64"""
     try:
-        url = os.getenv("AWARRI_TTS_URL")
+        url = os.getenv("URL")
         api_key = os.getenv("AWARRI_API_KEY")
         
         if not url or not api_key:
