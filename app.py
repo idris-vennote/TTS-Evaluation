@@ -63,15 +63,15 @@ def generate_spitch_audio(text, voice):
         st.error(f"Spitch generation failed: {str(e)}")
         return None, 0.0
 
+import streamlit as st
+import requests
+import time
+
 def generate_awarri_audio(text):
     """Generate audio using Awarri TTS and return base64"""
     try:
-        url = os.getenv("URL")
-        api_key = os.getenv("AWARRI_API_KEY")
-        
-        if not url or not api_key:
-            st.error("Awarri API credentials not configured")
-            return None, 0.0
+        url = st.secrets["awarri"]["url"]
+        api_key = st.secrets["awarri"]["api_key"]
         
         headers = {
             'accept': 'application/json',
@@ -90,9 +90,7 @@ def generate_awarri_audio(text):
         
         if response.status_code == 200:
             result = response.json()
-            
             if 'base64_data' in result:
-                # Already in base64 format
                 return result['base64_data'], latency
             else:
                 st.error("No 'base64_data' in Awarri response")
